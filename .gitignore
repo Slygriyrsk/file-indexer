@@ -1,0 +1,139 @@
+# ---- OS-specific ----
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ---- Build files ----
+*.o
+*.obj
+*.lo
+*.la
+*.a
+*.lib
+*.so
+*.so.*
+*.dll
+*.exe
+*.out
+*.bin
+*.d
+
+# ---- CMake / Make ----
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+build/
+build-*/
+_debug/
+_release/
+*.ninja
+*.ninja_deps
+*.ninja_log
+compile_commands.json
+
+# ---- Compiled Index Files ----
+*.idx
+*.index
+*.dat
+*.cache
+index.bin
+index.json
+
+# ---- IDEs & Editors ----
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains (CLion, etc.)
+.idea/
+
+# Eclipse
+.project
+.cproject
+.settings/
+
+# Sublime
+*.sublime-workspace
+*.sublime-project
+
+# ---- Logs & Debug ----
+*.log
+*.bak
+*.swp
+*.tmp
+*.old
+*.orig
+*.core
+*.stackdump
+
+# ---- JSON Library (optional) ----
+# If using nlohmann/json as a single header
+external/json.hpp
+3rdparty/json/
+vendor/json/
+
+# ---- Testing & Coverage ----
+*.gcno
+*.gcda
+*.gcov
+coverage/
+test_output/
+
+# ---- Git ----
+*.patch
+*.diff
+
+# ---- Archive files ----
+*.tar
+*.gz
+*.zip
+*.7z
+*.rar
+
+# ---- Documentation ----
+*.pdf
+*.doc
+*.docx
+*.md~
+
+# ---- Misc ----
+tags
+*.ctags
+*.gch
+*.pch
+*.ipch
+*.tlog
+*.suo
+*.user
+*.db
+
+# ---- Python (if used for tooling) ----
+__pycache__/
+*.py[cod]
+*.pyo
+env/
+venv/
+*.egg-info/
+
+# ---- Node.js (if used for UI tools) ----
+node_modules/
+dist/
+*.tsbuildinfo
+
+# ---- Personal / Secrets ----
+*.env
+.env.local
+.secret
+*.key
+*.pem
