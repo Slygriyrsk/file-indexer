@@ -1,4 +1,4 @@
-#include "file_indexer.h";
+#include "file_indexer.h"
 #include <iostream>
 #include <fstream>
 #include <algorithm>
@@ -10,14 +10,16 @@ void FileIndexer::indexFile(const FileInfo& file_info, size_t index) {
     lock_guard<mutex> lock(index_mutex_);//this lock guard will lock the given mutex(mutual inclusion) s.t only 1 thread can access this protected code
     //index by file name
     string lower_filename = file_info.filename;
-    transform(lower_filename.begin(), lower_filename.end(), lower_filename.begin(), tolower);
+    std::transform(lower_filename.begin(), lower_filename.end(), lower_filename.begin(),
+               [](unsigned char c){ return std::tolower(c); });
 
     filename_index_[lower_filename].push_back(index);
 
     //index by extension
     if(!file_info.extension.empty()) {
         string lower_ext = file_info.extension;
-        transform(lower_ext.begin(), lower_ext.end(), lower_ext.begin(), tolower);
+        std::transform(lower_ext.begin(), lower_ext.end(), lower_ext.begin(),
+               [](unsigned char c){ return std::tolower(c); });
         extension_index_[lower_ext].push_back(index);
     }
 }
@@ -62,11 +64,13 @@ void FileIndexer::buildIndex(const string& root_path) {
 vector<FileInfo> FileIndexer::searchByName(const string& query) const {
     vector<FileInfo> res;
     string lower_query = query;
-    transform(lower_query.begin(), lower_query.end(), lower_query.begin(), tolower);
+    std::transform(lower_query.begin(), lower_query.end(), lower_query.begin(),
+               [](unsigned char c){ return std::tolower(c); });
     
     for(const auto& file : files_) {
         string lower_filename = file.filename;
-        transform(lower_filename.begin(), lower_filename.end(), lower_filename.begin(), tolower);
+        std::transform(lower_filename.begin(), lower_filename.end(), lower_filename.begin(),
+               [](unsigned char c){ return std::tolower(c); });
         if(lower_filename.find(lower_query) != string::npos) {
             res.push_back(file);
         }
@@ -77,7 +81,8 @@ vector<FileInfo> FileIndexer::searchByName(const string& query) const {
 vector<FileInfo> FileIndexer::searchByExtension(const string& extension) const {
     vector<FileInfo> res;
     string lower_extension = extension;
-    transform(lower_extension.begin(), lower_extension.end(), lower_extension.begin(), tolower);
+    std::transform(lower_extension.begin(), lower_extension.end(), lower_extension.begin(),
+               [](unsigned char c){ return std::tolower(c); });
     
     if(lower_extension[0] != '.') {
         lower_extension = '.' + lower_extension; //.txt not txt. so avoid +=
@@ -95,7 +100,8 @@ vector<FileInfo> FileIndexer::searchByExtension(const string& extension) const {
 vector<FileInfo> FileIndexer::searchByContent(const string& query) const {
     vector<FileInfo> res;
     string lower_content = query;
-    transform(lower_content.begin(), lower_content.end(), lower_content.begin(), tolower);
+    std::transform(lower_content.begin(), lower_content.end(), lower_content.begin(),
+               [](unsigned char c){ return std::tolower(c); });
 
     for(const auto& file : files_) {
         //we will only search basic files like text only
@@ -110,7 +116,8 @@ vector<FileInfo> FileIndexer::searchByContent(const string& query) const {
                 bool found = false; //this is just for the edge cases like we donot repeat it again
                 while(getline(infile, line) && !found) {
                     //always transform into lowercase to reduce issue
-                    transform(line.begin(), line.end(), line.begin(), tolower);
+                    std::transform(line.begin(), line.end(), line.begin(),
+               [](unsigned char c){ return std::tolower(c); });
                     if(line.find(lower_content) != string::npos) {
                         res.push_back(file);
                         found = true;
